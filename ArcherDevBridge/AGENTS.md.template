@@ -1,0 +1,41 @@
+# AGENTS.md — NEW CORE repository instructions
+
+## Scope
+Godot 4.7.2 .NET + C# top-down 2D game using a multiplayer-ready, server-authoritative layered architecture.
+
+## Mandatory reading
+Before changing code, read and follow:
+- `PROJECT_RULES.md`
+- `ARCHITECTURE.md`
+- this `AGENTS.md`
+
+If instructions conflict, stop and report the conflict instead of guessing.
+
+## Archer Dev Bridge 0.5 roles
+When available, the parent Astra Operator should orchestrate:
+- `archer_explorer` — read-only mapping/evidence;
+- `archer_worker` — implementation/repair;
+- `archer_reviewer` — independent read-only review.
+
+The parent operator remains responsible for scope, synthesis and the final `OPERATOR_RESULT` / `OPERATOR_REVIEW` markers. Archer Dev Bridge independently runs the local Quality Gate afterward.
+
+## Hard constraints
+- Server/simulation is authoritative.
+- Client, UI and Presentation must not directly mutate authoritative state.
+- Preserve separation of Core / Geo / World / Simulation / Networking / Server / Client / Presentation / UI.
+- Use transport abstractions (`ITransport`-style) instead of coupling gameplay to one networking technology.
+- Keep `Main.cs` as bootstrap/composition root only.
+- Old Project Rebirth / Alpha3 is TECH DONOR / REFERENCE only; do not rebuild the old monolith.
+- Do not commit, push, reset, rebase, clean, switch unrelated branches, or delete unrelated files unless the human explicitly requests it.
+- Do not add roadmap systems outside the requested task.
+
+## Verification
+After changes, run when available:
+1. `dotnet build`
+2. project/lifecycle tests (`Tests/Tests.csproj` when present)
+3. Godot headless editor validation
+4. Godot normal client smoke-test
+5. Godot `--server` smoke-test
+6. `git diff --check`
+
+Report exact results. Never claim a skipped check passed.
